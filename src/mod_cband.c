@@ -1,37 +1,36 @@
 /*
- * $Id: mod_cband.c,v 1.17 2006/01/19 21:51:58 dembol Exp $
  *
- * mod_cband - A per-user, per-virtualhost and per-destination bandwidth limiter for the Apache HTTP Server Version 2
+ * mod_cbandplus - A per-user, per-virtualhost and per-destination bandwidth limiter for the Apache HTTP Server Version 2
  *
- * Copyright (c) 2005 Lukasz Dembinski <dembol@cband.linux.pl>
+ * Copyright (c) 2014 Simon Wadsworth
  * All Rights Reserved
- * 
- * Date:	2005/01/21
- * Info:	mod_cband Apache 2 module
- * Contact:	mailto: <dembol@cband.linux.pl>
+ *
+ * Date:	2014/03/13
+ * Info:	mod_cbandplus Apache 2.x module
  * Version:	0.9.6.1
  * Phase:       stabilization
  *
  * Authors:
+ * - Simon Wadsworth <contact at simonwadsworth dot geek do nz>
+
+ * mod_cband authors:
  * - Lukasz Dembinski <dembol@cband.linux.pl>
  * - Sergey V. Beduev <shaman@interdon.net>
  * - Kyle Poulter <kyle@unixowns.us>
  * - Adam Dawidowski <drake@oomkill.net>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *	     
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *		     
+ *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *					 
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "httpd.h"
