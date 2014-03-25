@@ -64,14 +64,17 @@
 #define MAX_SHMEM_SEGMENTS		0x1000
 #define MAX_SHMEM_ENTRIES		0x1000
 #define MAX_SLOW_REMOTE_LOOPS		5
+#define MAX_DELAY_LOOPS			100
 #define MAX_OVERLIMIT_DELAY		10
 #define MAX_PULSE_LEN			250000
 #define MAX_PULSES			4
-#define MAX_SLEEP_TIME			1000000
+#define MAX_CHUNK_LEN			0x8000
+#define CONST_PULSE_LEN			1000000
+#define MAX_SLEEP_TIME			100000
 #define MAX_REMOTE_HOST_LIFE		10
 #define MIN_SPEED			1024
-#define MIN_SLEEP_TIME			100000
-#define PERIOD_LEN			5
+#define MIN_SLEEP_TIME			50000
+#define PERIOD_LEN			1
 #define DEFAULT_REFRESH			15
 #define CBAND_HANDLER_ALL		0
 #define CBAND_HANDLER_ME		1
@@ -115,6 +118,8 @@ typedef struct {
     mod_cband_scoreboard_entry total_usage;
     float current_TX, old_TX;
     float current_conn, old_conn;
+    int overlimit;
+    unsigned long time_delta;
 } mod_cband_shmem_data;
 
 typedef struct {
@@ -166,7 +171,7 @@ struct mod_cband_class_config_entry {
 typedef struct mod_cband_remote_host {
     int used;
     unsigned long remote_addr;
-    int remote_conn;
+    unsigned long remote_conn;
     unsigned long remote_kbps, remote_max_conn;
     unsigned long remote_last_time;
     unsigned long remote_last_refresh;
@@ -186,6 +191,7 @@ typedef struct {
     mod_cband_class_config_entry *next_class;
     apr_pool_t *p;
     char *default_limit_exceeded;
+    int default_limit_exceeded_code;
     patricia_tree_t *tree;
     unsigned long start_time;				/* in seconds */
     int sem_id;
@@ -193,7 +199,8 @@ typedef struct {
     mod_cband_remote_hosts remote_hosts;
     int shmem_seg_idx;
     unsigned long score_flush_period;
-    int random_pulse;
+    unsigned long random_pulse;
+    unsigned long max_chunk_len;
 } mod_cband_config_header;
 
 typedef struct mod_cband_brigade_ctx {
